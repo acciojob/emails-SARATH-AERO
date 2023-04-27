@@ -31,8 +31,11 @@ public class Email {
         if (oldPassword.equals(newPassword)) {
             if (check(newPassword)) {
                 password = newPassword;
-            }
-        }
+                System.out.println("your password changed successfully");
+            } else
+                System.out.println("the new password is not valid");
+        } else
+            System.out.println("the given password does not match with current password");
     }
 
     public boolean check(String password) {
@@ -47,20 +50,15 @@ public class Email {
         boolean upper = false;
         boolean digit = false;
         boolean special = false;
-        String specialChar = "!@#$%^&*()-<>?:|+";
-        char prev = '.';
 
         for(Character c : list){
-            if(c == prev)
-                return false;
-            prev = c;
             if(c >= 'a' && c <= 'z')
                 lower = true;
             else if(c >= 'A' && c <= 'Z')
                 upper = true;
             else if(c >= '0' && c <= '9')
                 digit = true;
-            else if(specialChar.indexOf(c) != -1)
+            else
                 special = true;
         }
         return lower && upper && digit && special;

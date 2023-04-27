@@ -11,10 +11,10 @@ public class Gmail extends Email {
     //Trash: Stores mails. Each mail has date (Date), sender (String), message (String)
 
     List<Mail> inbox;
-    int inboxIndex = 0;
     List<Mail> trash;
     public Gmail(String emailId, int inboxCapacity) {
         super(emailId);
+        this.inboxCapacity = inboxCapacity;
         inbox = new ArrayList<>(inboxCapacity);
         trash = new ArrayList<>(inboxCapacity);
     }
@@ -28,11 +28,9 @@ public class Gmail extends Email {
         if (inbox.size() == inboxCapacity) {
             trash.add(inbox.get(0));
             inbox.remove(0);
-            inboxIndex--;
             return;
         }
         inbox.add(mail);
-        inboxIndex++;
     }
 
     public void deleteMail(String message){
@@ -42,7 +40,6 @@ public class Gmail extends Email {
             if(mail.getMessage().equals(message)) {
                 trash.add(mail);
                 inbox.remove(mail);
-                inboxIndex--;
             }
         }
     }
@@ -52,7 +49,7 @@ public class Gmail extends Email {
         // Else, return the message of the latest mail present in the inbox
         if(inbox.isEmpty())
             return null;
-        return inbox.get(inboxIndex).getMessage();
+        return inbox.get(inbox.size()-1).getMessage();
     }
 
     public String findOldestMessage(){
@@ -87,7 +84,7 @@ public class Gmail extends Email {
 
     public void emptyTrash(){
         // clear all mails in the trash
-        trash = new ArrayList<>(inboxCapacity);
+        trash.clear();
 
     }
 
